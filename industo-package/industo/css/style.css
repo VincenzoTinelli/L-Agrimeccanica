@@ -2082,7 +2082,8 @@
 
 .main-slider-three .content-column .inner-column{
 	position:relative;
-	padding-top:var(--padding-top-110);
+	padding-top:var(--padding-top-30); 
+	/* padding-top:var(--padding-top-110);  */
 }
 
 .main-slider-three .title{
