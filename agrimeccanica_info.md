@@ -218,10 +218,10 @@ Cisternino (BR)
 Puglia, Italia
 
 ### Modalità di Contatto
-[Da completare con informazioni specifiche]
-- Telefono: [Da inserire]
-- Email: [Da inserire]
-- Orari di apertura: [Da inserire]
+- **Telefono**: +39 349 588 4813
+- **Cellulare**: 349 588 4813
+- **Email**: l'agrimeccanica@hotmail.it
+- **Orari di apertura**: [Da inserire]
 
 ---
 

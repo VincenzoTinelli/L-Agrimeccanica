@@ -637,13 +637,23 @@
 					navText: [ '<span class="fa fa-angle-left"></span>', '<span class="fa fa-angle-right"></span>' ],
 					dots: true,
 					autoplay: true,
-					autoplayTimeout: 5000
+					autoplayTimeout: 8000
 				})
-				.on('changed.owl.carousel', function (e) {
+				.on('translate.owl.carousel', function (e) {
 					if (!flag) {
-						flag = false;
-						$sync4.trigger('to.owl.carousel', [e.item.index, duration, true]);
-						flag = false;
+						flag = true;
+						var count = e.item.count - 1;
+						var current = Math.round(e.item.index - (e.item.count / 2) - 0.5);
+						if (current < 0) {
+							current = count;
+						}
+						if (current > count) {
+							current = 0;
+						}
+						$sync4.trigger('to.owl.carousel', [current, duration, true]);
+						setTimeout(function() {
+							flag = false;
+						}, duration);
 					}
 				});
 
@@ -656,8 +666,7 @@
 					navText: [ '<span class="icon flaticon-left-arrow-2"></span>', '<span class="icon flaticon-right-arrow-1"></span>' ],
 					dots: false,
 					center: true,
-					autoplay: true,
-					autoplayTimeout: 5000,
+					autoplay: false,
 					responsive: {
 						0:{
 				            items:1,
@@ -682,13 +691,13 @@
 				        }
 				    },
 				})
-				
+
 		.on('click', '.owl-item', function () {
 			$sync3.trigger('to.owl.carousel', [$(this).index(), duration, true]);
 		})
 		.on('changed.owl.carousel', function (e) {
 			if (!flag) {
-				flag = true;		
+				flag = true;
 				$sync3.trigger('to.owl.carousel', [e.item.index, duration, true]);
 				flag = false;
 			}

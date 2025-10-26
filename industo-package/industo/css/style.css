@@ -7084,9 +7084,16 @@
 
 ***/
 
+/* Modificata cta-section-two */
+/* .cta-section-two{
+	position:relative;
+	z-index:1;
+} */
+ 
 .cta-section-two{
 	position:relative;
 	z-index:1;
+	padding: 200px 0px;
 }
 
 .cta-section-two .inner-container:before{
