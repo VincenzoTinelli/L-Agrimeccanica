@@ -340,10 +340,10 @@
             <!-- Filter -->
             <div class="filters clearfix">
               <ul class="filter-tabs filter-btns text-center clearfix">
-                <li class="active filter" data-role="button" data-filter="all">
+                <li class="filter" data-role="button" data-filter="all">
                   Tutti i Prodotti
                 </li>
-                <li class="filter" data-role="button" data-filter=".seminatrici">
+                <li class="active filter" data-role="button" data-filter=".seminatrici">
                   Seminatrici
                 </li>
                 <li class="filter" data-role="button" data-filter=".erpici-classici">
@@ -365,6 +365,11 @@
                   Attrezzatura di Supporto
                 </li>
               </ul>
+
+              <!-- Progress Bar for Auto-Rotate -->
+              <div class="filter-progress-container" style="width: 100%; height: 4px; background: rgba(0,0,0,0.1); margin-top: 15px; border-radius: 2px; overflow: hidden; position: relative;">
+                <div class="filter-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff6b35, #f7931e); transition: width 0.1s linear; border-radius: 2px;"></div>
+              </div>
             </div>
 
             <div class="filter-list row clearfix">
@@ -920,6 +925,229 @@
     <script src="js/jquery-ui.js"></script>
     <script src="js/cursor-script.js"></script>
     <script src="js/script.js"></script>
+
+    <!-- Auto-Rotate Filter Script -->
+    <script>
+    (function($) {
+      'use strict';
+
+      var config = {
+        rotateInterval: 5000,
+        resumeDelay: 20000,
+        progressSteps: 50
+      };
+
+      var categories = [
+        { filter: '.seminatrici', index: 1 },
+        { filter: '.erpici-classici', index: 2 },
+        { filter: '.erpici-speciali', index: 3 },
+        { filter: '.rulli', index: 4 },
+        { filter: '.caricatori', index: 5 },
+        { filter: '.frantumazione', index: 6 },
+        { filter: '.supporto', index: 7 }
+      ];
+
+      var state = {
+        currentIndex: 0,
+        isRunning: false,
+        isPermanentlyStopped: false,
+        rotateTimer: null,
+        resumeTimer: null,
+        progressTimer: null,
+        progressValue: 0,
+        userInteracting: false
+      };
+
+      var $filterButtons = $('.filter-tabs .filter');
+      var $progressBar = $('.filter-progress-bar');
+      var $galleryCards = $('.project-block-two');
+      var mixer = null;
+
+      function init() {
+        // Aspetta che MixItUp si inizializzi, poi clicca sul bottone seminatrici
+        setTimeout(function() {
+          console.log('[DEBUG] Clicking seminatrici button');
+          var $seminatriciBtn = $filterButtons.filter('[data-filter=".seminatrici"]');
+          $seminatriciBtn.trigger('click');
+
+          // Salva riferimento mixer per uso futuro
+          mixer = $('.filter-list').data('mixitup');
+
+          // Parti con auto-rotate
+          setTimeout(function() {
+            state.isRunning = true;
+            startAutoRotate();
+          }, 500);
+        }, 500);
+      }
+
+      function activateFilter(filterValue) {
+        console.log('[DEBUG] Activating filter:', filterValue);
+
+        $filterButtons.removeClass('active');
+        var $targetBtn = $filterButtons.filter('[data-filter="' + filterValue + '"]');
+        $targetBtn.addClass('active');
+        console.log('[DEBUG] Button activated:', $targetBtn.length);
+
+        if (mixer && typeof mixer.filter === 'function') {
+          console.log('[DEBUG] Using mixer.filter()');
+          mixer.filter(filterValue);
+        } else {
+          console.log('[DEBUG] Trying fallback methods');
+          var $container = $('.filter-list');
+
+          if ($container.mixItUp) {
+            console.log('[DEBUG] Using $container.mixItUp()');
+            $container.mixItUp('filter', filterValue);
+          } else if (typeof mixitup !== 'undefined') {
+            console.log('[DEBUG] Using global mixitup()');
+            var mixerInstance = mixitup('.filter-list');
+            if (mixerInstance) {
+              mixerInstance.filter(filterValue);
+              mixer = mixerInstance;
+            }
+          } else {
+            console.log('[DEBUG] Last resort: trigger click');
+            $targetBtn.trigger('click');
+          }
+        }
+      }
+
+      function startAutoRotate() {
+        if (state.isPermanentlyStopped || !state.isRunning) return;
+
+        stopAllTimers();
+        state.progressValue = 0;
+        updateProgressBar(0);
+        startProgressBar();
+
+        state.rotateTimer = setTimeout(function() {
+          rotateToNextCategory();
+        }, config.rotateInterval);
+      }
+
+      function startProgressBar() {
+        var step = 100 / config.progressSteps;
+        var stepDuration = config.rotateInterval / config.progressSteps;
+
+        state.progressTimer = setInterval(function() {
+          if (state.isRunning && !state.isPermanentlyStopped) {
+            state.progressValue += step;
+            if (state.progressValue > 100) state.progressValue = 100;
+            updateProgressBar(state.progressValue);
+          } else {
+            clearInterval(state.progressTimer);
+          }
+        }, stepDuration);
+      }
+
+      function updateProgressBar(percentage) {
+        $progressBar.css('width', percentage + '%');
+      }
+
+      function rotateToNextCategory() {
+        if (state.isPermanentlyStopped || !state.isRunning || state.userInteracting) return;
+
+        state.currentIndex = (state.currentIndex + 1) % categories.length;
+        state.userInteracting = false;
+
+        activateFilter(categories[state.currentIndex].filter);
+
+        setTimeout(function() {
+          startAutoRotate();
+        }, 100);
+      }
+
+      function stopAllTimers() {
+        clearTimeout(state.rotateTimer);
+        clearTimeout(state.resumeTimer);
+        clearInterval(state.progressTimer);
+        state.rotateTimer = null;
+        state.resumeTimer = null;
+        state.progressTimer = null;
+      }
+
+      function pauseAutoRotate() {
+        state.isRunning = false;
+        stopAllTimers();
+        updateProgressBar(0);
+      }
+
+      function scheduleResume() {
+        if (state.isPermanentlyStopped) return;
+
+        stopAllTimers();
+        state.resumeTimer = setTimeout(function() {
+          if (!state.isPermanentlyStopped) {
+            state.isRunning = true;
+            state.userInteracting = false;
+            startAutoRotate();
+          }
+        }, config.resumeDelay);
+      }
+
+      $filterButtons.on('click', function() {
+        var clickedFilter = $(this).attr('data-filter');
+
+        if (clickedFilter === 'all') {
+          state.isPermanentlyStopped = true;
+          state.userInteracting = true;
+          pauseAutoRotate();
+          return;
+        }
+
+        if (!state.userInteracting) return;
+
+        pauseAutoRotate();
+
+        for (var i = 0; i < categories.length; i++) {
+          if (categories[i].filter === clickedFilter) {
+            state.currentIndex = i;
+            break;
+          }
+        }
+
+        scheduleResume();
+      });
+
+      $filterButtons.on('mousedown touchstart', function() {
+        state.userInteracting = true;
+      });
+
+      $galleryCards.on('mouseenter', function() {
+        if (!state.isPermanentlyStopped && state.isRunning) {
+          state.userInteracting = true;
+          pauseAutoRotate();
+        }
+      });
+
+      $galleryCards.on('mouseleave', function() {
+        if (!state.isPermanentlyStopped && !state.isRunning) {
+          scheduleResume();
+        }
+      });
+
+      var scrollTimeout;
+      $(window).on('scroll', function() {
+        if (!state.isPermanentlyStopped && state.isRunning) {
+          state.userInteracting = true;
+          pauseAutoRotate();
+        }
+
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+          if (!state.isPermanentlyStopped && !state.isRunning) {
+            scheduleResume();
+          }
+        }, config.resumeDelay);
+      });
+
+      $(document).ready(function() {
+        init();
+      });
+
+    })(jQuery);
+    </script>
 
     <!--[if lt IE 9
       ]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script
