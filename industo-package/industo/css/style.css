@@ -6641,9 +6641,74 @@
 }
 
 /*** 
+====================================================================
+	Counter Section - ABOUT PAGE SPECIFIC
+====================================================================
+***/
+
+/* Reset del layout flex per About page */
+.counter-section-about .row {
+	display: flex !important;
+}
+
+.counter-section-about .counter-column .inner-column {
+	padding: 30px 20px 30px 140px !important;
+	display: block !important;
+	flex-direction: initial !important;
+	min-height: auto !important;
+}
+
+.counter-section-about .counter-column .inner-column .icon-box {
+	position: absolute !important;
+	left: -100px !important;
+	top: -37px !important;
+	width: 217px !important;
+	height: 192px !important;
+	border-radius: 50% !important;
+	text-align: right !important;
+	font-size: var(--font-60) !important;
+	order: initial !important;
+}
+
+.counter-section-about .counter-column .icon-box:before {
+	position: absolute;
+	content: '';
+	left: -15px;
+	top: -5px;
+	right: -12px;
+	bottom: 0px;
+	opacity: 0.10;
+	border-radius: 50%;
+	background: var(--color-fourtyone);
+}
+
+.counter-section-about .counter-column h3 {
+	font-size: var(--font-48) !important;
+	text-align: left !important;
+	margin-bottom: 0 !important;
+	order: initial !important;
+}
+
+.counter-section-about .counter-column .bottom-content {
+	display: block !important;
+	margin-top: 0 !important;
+	order: initial !important;
+}
+
+.counter-section-about .counter-column .counter-text {
+	font-size: var(--font-22) !important;
+	margin-top: var(--margin-top-10) !important;
+}
+
+.counter-section-about .counter-column .icon-box .icon {
+	line-height: 210px !important;
+	padding-right: var(--padding-right-30) !important;
+}
+
+/*** 
 
 ====================================================================
-	Counter Section
+	Counter Section HOME
 ====================================================================
 
 ***/
