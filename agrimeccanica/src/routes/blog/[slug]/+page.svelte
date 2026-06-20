@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { formatDate } from '$lib/posts';
 	import QuoteCTA from '$lib/components/QuoteCTA.svelte';
+	import BlogCover from '$lib/components/BlogCover.svelte';
 
 	let { data } = $props();
 	// data.content è il componente Svelte compilato da mdsvex.
@@ -26,6 +27,10 @@
 		</h1>
 		<p class="mt-4 font-mono text-sm text-muted">di {data.meta.author}</p>
 	</header>
+
+	<div class="mt-10 aspect-[16/9] overflow-hidden rounded-lg border border-border bg-bg">
+		<BlogCover slug={data.slug} alt={data.meta.title} sizes="(min-width: 768px) 48rem, 100vw" priority />
+	</div>
 
 	<div
 		class="prose prose-invert mt-10 max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-ink prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-ink prose-li:marker:text-primary"

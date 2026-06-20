@@ -13,6 +13,15 @@
 	const inputClass =
 		'mt-1.5 w-full rounded-md border-border bg-bg text-ink placeholder:text-muted focus:border-primary focus:ring-primary';
 
+	// Indirizzo completo per la mappa (geocodificato da Google, niente API key).
+	const mapQuery = [
+		site.contacts.address.street,
+		site.contacts.address.city,
+		site.contacts.address.region
+	].join(', ');
+	const mapEmbed = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=13&output=embed`;
+	const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+
 	function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		const subject = `Richiesta preventivo${form.prodotto ? ` — ${form.prodotto}` : ''}`;
@@ -120,8 +129,22 @@
 				{site.contacts.email}
 			</a>
 		</div>
-		<div class="flex aspect-video items-center justify-center bg-bg">
-			<span class="font-mono text-xs text-muted">🗺️ mappa Cisternino — Fase 5</span>
+		<div class="bg-surface">
+			<iframe
+				title="Mappa — {site.contacts.address.city}"
+				src={mapEmbed}
+				class="block aspect-video w-full border-0 grayscale-[0.3]"
+				loading="lazy"
+				referrerpolicy="no-referrer-when-downgrade"
+			></iframe>
+			<a
+				href={mapLink}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="block bg-surface px-6 py-4 font-mono text-xs text-primary transition-colors hover:text-primary-strong"
+			>
+				Apri in Google Maps →
+			</a>
 		</div>
 	</div>
 </section>

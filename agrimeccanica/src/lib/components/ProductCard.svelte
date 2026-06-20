@@ -1,27 +1,26 @@
 <script lang="ts">
 	import type { Product } from '$lib/data/products';
+	import { productImage } from '$lib/images';
+	import ProductImage from '$lib/components/ProductImage.svelte';
 
 	let { product }: { product: Product } = $props();
 
 	// Nome senza il prefisso-codice (il codice è mostrato a parte).
 	const displayName = $derived(product.name.replace(product.code, '').trim());
+	const hasImage = $derived(!!productImage(product.slug));
 </script>
 
 <article
 	class="group flex flex-col overflow-hidden rounded-lg border border-border bg-surface transition-colors hover:border-muted"
 >
-	<!-- Placeholder tecnico "blueprint" (foto reale in Fase 5) -->
-	<div class="relative flex aspect-[4/3] items-center justify-center border-b border-border bg-bg">
-		<span class="font-mono text-3xl font-bold tracking-widest text-surface-2 select-none">
-			{product.code}
-		</span>
-		<span
-			class="absolute top-3 left-3 font-mono text-[0.65rem] {product.hasPhoto
-				? 'text-primary'
-				: 'text-muted'}"
-		>
-			{product.hasPhoto ? '● foto disponibile' : '○ foto in arrivo'}
-		</span>
+	<div class="relative aspect-[4/3] overflow-hidden border-b border-border bg-bg">
+		<ProductImage
+			{product}
+			class="transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+		/>
+		{#if !hasImage}
+			<span class="absolute top-3 left-3 font-mono text-[0.65rem] text-muted">○ foto in arrivo</span>
+		{/if}
 		{#if product.featured}
 			<span
 				class="absolute top-3 right-3 rounded bg-accent px-1.5 py-0.5 font-mono text-[0.6rem] font-bold tracking-wider text-on-brand"

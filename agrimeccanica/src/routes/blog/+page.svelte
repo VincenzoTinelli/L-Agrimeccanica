@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { posts, formatDate } from '$lib/posts';
 	import QuoteCTA from '$lib/components/QuoteCTA.svelte';
+	import BlogCover from '$lib/components/BlogCover.svelte';
 </script>
 
 <svelte:head>
@@ -30,18 +31,27 @@
 				<li>
 					<a
 						href="/blog/{post.slug}"
-						class="group flex h-full flex-col rounded-lg border border-border bg-surface p-6 transition-colors hover:border-muted hover:bg-surface-2"
+						class="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-surface transition-colors hover:border-muted hover:bg-surface-2"
 					>
-						<p class="font-mono text-xs text-primary">
-							{post.category ?? 'Articolo'} · {formatDate(post.date)}
-						</p>
-						<h2 class="mt-3 text-xl font-bold text-ink">{post.title}</h2>
-						<p class="mt-3 flex-1 text-sm leading-relaxed text-muted">{post.excerpt}</p>
-						<span
-							class="mt-5 inline-flex items-center gap-1.5 font-mono text-sm text-primary transition-transform group-hover:translate-x-0.5"
-						>
-							Leggi l'articolo →
-						</span>
+						<div class="aspect-[16/9] overflow-hidden border-b border-border bg-bg">
+							<BlogCover
+								slug={post.slug}
+								alt={post.title}
+								class="transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+							/>
+						</div>
+						<div class="flex flex-1 flex-col p-6">
+							<p class="font-mono text-xs text-primary">
+								{post.category ?? 'Articolo'} · {formatDate(post.date)}
+							</p>
+							<h2 class="mt-3 text-xl font-bold text-ink">{post.title}</h2>
+							<p class="mt-3 flex-1 text-sm leading-relaxed text-muted">{post.excerpt}</p>
+							<span
+								class="mt-5 inline-flex items-center gap-1.5 font-mono text-sm text-primary transition-transform group-hover:translate-x-0.5"
+							>
+								Leggi l'articolo →
+							</span>
+						</div>
 					</a>
 				</li>
 			{/each}
