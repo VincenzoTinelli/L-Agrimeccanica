@@ -4,7 +4,7 @@ Sistema visivo de L'Agrimeccanica. Direzione: **Acciaio & Campo** — industrial
 
 ## Color
 
-Strategia: **committed scuro**. Superficie "acciaio" (grafite cool, neutra), il colore vive nei due brand color con ruolo da segnaletica — mai decorativo. Tutto in OKLCH.
+Strategia: **committed scuro, arancio-forward**. Superficie "acciaio" (grafite cool, neutra); il colore è segnaletica, mai decorativo. **L'arancio è il colore delle macchine (il protagonista) → è il primario.** Il **verde** (anche nel logo) è il secondario "qualità/vai". Il **rosso resta solo nel logo**, non è un colore d'interfaccia (rosso+arancio litigano). Tutto in OKLCH. Scelta confermata dall'utente (giu 2026).
 
 | Ruolo | Token | OKLCH | Uso |
 |---|---|---|---|
@@ -14,12 +14,15 @@ Strategia: **committed scuro**. Superficie "acciaio" (grafite cool, neutra), il 
 | Border | `--color-border` | `oklch(0.34 0.012 235)` | hairline, separatori |
 | Ink | `--color-ink` | `oklch(0.97 0.003 235)` | testo principale (≈17:1) |
 | Muted | `--color-muted` | `oklch(0.74 0.012 235)` | testo secondario (≈7:1) |
-| Primary | `--color-primary` | `oklch(0.72 0.16 150)` | verde-macchina: CTA, qualità, stati attivi |
-| Primary strong | `--color-primary-strong` | `oklch(0.66 0.17 150)` | hover/pressed del primario |
-| Accent | `--color-accent` | `oklch(0.72 0.16 65)` | arancio sicurezza: enfasi puntuale, attenzione |
-| Ink on brand | `--color-on-brand` | `oklch(0.17 0.01 235)` | testo scuro su verde/arancio (≈6.5:1) |
+| **Primary** | `--color-primary` | `oklch(0.70 0.17 56)` | **arancio macchina**: CTA, brand, stati attivi |
+| Primary strong | `--color-primary-strong` | `oklch(0.63 0.18 52)` | hover/pressed del primario |
+| Primary soft | `--color-primary-soft` | `oklch(0.27 0.045 55)` | superficie calda per sezioni in evidenza |
+| **Secondary** | `--color-secondary` | `oklch(0.72 0.15 150)` | **verde qualità**: azioni secondarie, "vai", marker |
+| Secondary strong | `--color-secondary-strong` | `oklch(0.66 0.16 150)` | hover/pressed del secondario |
+| Accent | `--color-accent` | `oklch(0.72 0.15 150)` | = verde (alias storico per badge/marker) |
+| Ink on brand | `--color-on-brand` | `oklch(0.18 0.02 60)` | testo scuro su arancio/verde (≈6.5:1) |
 
-Regole: i bottoni primari sono verde pieno con testo grafite scuro (look "machined"). L'arancio è raro — segnala azione/attenzione, non riempie. Nessun gradient, nessun glow, nessun glass.
+Regole: bottoni primari **arancio pieno** con testo grafite scuro (look "machined"); secondari **verde**. Il verde marca qualità/positività (CE, testato, "vai"); usato con misura. Nessun gradient, nessun glow, nessun glass. Token alternativi `[data-theme=verde|rosso]` esistono solo per il toggler di confronto.
 
 ## Typography
 

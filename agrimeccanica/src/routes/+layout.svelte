@@ -6,6 +6,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
+	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 
 	let { children } = $props();
 </script>
@@ -21,3 +22,4 @@
 	</main>
 	<Footer />
 </div>
+<ThemeSwitcher />

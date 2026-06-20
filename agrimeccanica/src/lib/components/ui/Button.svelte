@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	type Variant = 'primary' | 'outline' | 'ghost';
+	type Variant = 'primary' | 'secondary' | 'outline' | 'ghost';
 	type Size = 'md' | 'lg';
 
 	let {
@@ -30,6 +30,7 @@
 
 	const variants: Record<Variant, string> = {
 		primary: 'bg-primary text-on-brand hover:bg-primary-strong',
+		secondary: 'bg-secondary text-on-brand hover:bg-secondary-strong',
 		outline: 'border border-border text-ink hover:border-muted hover:bg-surface-2',
 		ghost: 'text-muted hover:bg-surface hover:text-ink'
 	};

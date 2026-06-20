@@ -4,17 +4,10 @@
 	import { posts, formatDate } from '$lib/posts';
 	import ProductCard from '$lib/components/ProductCard.svelte';
 	import QuoteCTA from '$lib/components/QuoteCTA.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
 	import BlogCover from '$lib/components/BlogCover.svelte';
+	import Hero from '$lib/components/Hero.svelte';
 
 	const latestPosts = posts.slice(0, 3);
-
-	const sampleSpecs = [
-		['Tipo', 'Seminatrice pneumatica'],
-		['Larghezza', '4,00 m · 34 gambali'],
-		['Tramoggia', '600 kg + 110 kg'],
-		['Produzione', 'Propria · Cisternino (BR)']
-	];
 
 	const values = [
 		{ k: 'Qualità', v: 'Lavoro artigianale su ogni pezzo, testato prima della consegna.' },
@@ -37,69 +30,7 @@
 	/>
 </svelte:head>
 
-<!-- HERO -->
-<section class="border-b border-border">
-	<div class="h-1 w-full bg-accent"></div>
-	<div class="mx-auto grid max-w-7xl gap-12 px-4 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-28">
-		<div class="flex flex-col justify-center">
-			<p class="font-mono text-xs tracking-widest text-primary uppercase">
-				est. 1995 · officina nelle Murge
-			</p>
-			<h1
-				class="mt-5 text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] font-extrabold tracking-tight text-ink uppercase"
-			>
-				Robuste.<br />Affidabili.<br /><span class="text-primary">Costruite per durare.</span>
-			</h1>
-			<p class="mt-7 max-w-xl text-lg leading-relaxed text-muted">
-				Produciamo attrezzature agricole e ripariamo mezzi da trent'anni. Lavoro artigianale su ogni
-				pezzo, testato prima della consegna.
-			</p>
-			<div class="mt-9 flex flex-wrap gap-3">
-				<Button href="/prodotti" size="lg">Scopri i prodotti</Button>
-				<Button href="/contatti" size="lg" variant="outline">Richiedi preventivo</Button>
-			</div>
-			<dl class="mt-12 flex flex-wrap gap-x-8 gap-y-3 font-mono text-sm text-muted">
-				<div class="flex items-baseline gap-2">
-					<dt class="text-2xl font-bold text-ink">30</dt>
-					<dd>anni</dd>
-				</div>
-				<div class="flex items-baseline gap-2">
-					<dt class="text-2xl font-bold text-ink">1500+</dt>
-					<dd>macchine</dd>
-				</div>
-				<div class="flex items-baseline gap-2">
-					<dt class="text-2xl font-bold text-ink">25+</dt>
-					<dd>modelli</dd>
-				</div>
-			</dl>
-		</div>
-
-		<div class="flex items-center">
-			<div class="w-full rounded-lg border border-border bg-surface">
-				<div class="flex items-center justify-between border-b border-border px-5 py-4">
-					<span class="font-mono text-sm font-bold tracking-wider text-ink">GT-400</span>
-					<span class="font-mono text-xs text-accent">SCHEDA TECNICA</span>
-				</div>
-				<dl class="divide-y divide-border">
-					{#each sampleSpecs as [k, v] (k)}
-						<div class="flex items-baseline justify-between gap-4 px-5 py-3.5">
-							<dt class="font-mono text-xs tracking-wide text-muted uppercase">{k}</dt>
-							<dd class="text-right text-sm text-ink">{v}</dd>
-						</div>
-					{/each}
-				</dl>
-				<div class="border-t border-border px-5 py-4">
-					<a
-						href="/prodotti/seminatrici"
-						class="font-mono text-xs text-primary hover:text-primary-strong"
-					>
-						Vedi la seminatrice →
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+<Hero />
 
 <!-- CATEGORIE -->
 <section class="mx-auto max-w-7xl px-4 py-20">

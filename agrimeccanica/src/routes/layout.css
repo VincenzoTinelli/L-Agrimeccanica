@@ -15,11 +15,15 @@
 	--color-ink: oklch(0.97 0.003 235);
 	--color-muted: oklch(0.74 0.012 235);
 
-	/* Brand color — usati come segnaletica, mai decorativi */
-	--color-primary: oklch(0.72 0.16 150); /* verde-macchina */
-	--color-primary-strong: oklch(0.66 0.17 150);
-	--color-accent: oklch(0.72 0.16 65); /* arancio sicurezza */
-	--color-on-brand: oklch(0.17 0.01 235); /* testo scuro su verde/arancio */
+	/* Brand — ARANCIO macchina (primario) + VERDE qualità (secondario).
+	   Il rosso resta solo nel logo, non è un colore d'interfaccia. */
+	--color-primary: oklch(0.7 0.17 56); /* arancio macchina: CTA, brand */
+	--color-primary-strong: oklch(0.63 0.18 52); /* hover/pressed */
+	--color-primary-soft: oklch(0.27 0.045 55); /* superficie calda per sezioni in evidenza */
+	--color-secondary: oklch(0.72 0.15 150); /* verde: qualità, “vai”, azioni secondarie */
+	--color-secondary-strong: oklch(0.66 0.16 150);
+	--color-accent: oklch(0.72 0.15 150); /* marker/badge = verde (alias storico) */
+	--color-on-brand: oklch(0.18 0.02 60); /* testo scuro su arancio/verde */
 
 	/* Tipografia */
 	--font-sans: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
@@ -27,6 +31,28 @@
 
 	/* Easing esponenziale per motion sobria */
 	--ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Temi alternativi (anteprima palette) ──────────────────────────
+   `arancio` è il default qui sopra (@theme). Questi blocchi sono solo per il
+   toggler di confronto: ridefiniscono i brand color, tutto il resto segue. */
+:root[data-theme='verde'] {
+	--color-primary: oklch(0.72 0.16 150);
+	--color-primary-strong: oklch(0.66 0.17 150);
+	--color-primary-soft: oklch(0.26 0.035 150);
+	--color-secondary: oklch(0.7 0.16 58);
+	--color-secondary-strong: oklch(0.63 0.17 52);
+	--color-accent: oklch(0.7 0.16 58);
+	--color-on-brand: oklch(0.17 0.01 235);
+}
+:root[data-theme='rosso'] {
+	--color-primary: oklch(0.585 0.205 27);
+	--color-primary-strong: oklch(0.52 0.21 27);
+	--color-primary-soft: oklch(0.26 0.05 27);
+	--color-secondary: oklch(0.72 0.15 150);
+	--color-secondary-strong: oklch(0.66 0.16 150);
+	--color-accent: oklch(0.72 0.15 150);
+	--color-on-brand: oklch(0.97 0.02 27);
 }
 
 @layer base {
