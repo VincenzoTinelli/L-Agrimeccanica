@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { site, productCategories } from '$lib/config/site';
 	import { flagshipProducts } from '$lib/data/products';
+	import { posts, formatDate } from '$lib/posts';
 	import ProductCard from '$lib/components/ProductCard.svelte';
 	import QuoteCTA from '$lib/components/QuoteCTA.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+
+	const latestPosts = posts.slice(0, 3);
 
 	const sampleSpecs = [
 		['Tipo', 'Seminatrice pneumatica'],
@@ -171,5 +174,34 @@
 		</div>
 	</div>
 </section>
+
+{#if latestPosts.length}
+	<!-- DAL BLOG -->
+	<section class="mx-auto max-w-7xl px-4 py-20">
+		<div class="flex items-end justify-between gap-4">
+			<h2 class="text-2xl font-bold tracking-tight text-ink uppercase sm:text-3xl">Dal blog</h2>
+			<a href="/blog" class="hidden font-mono text-sm text-primary hover:underline sm:inline">
+				Tutti gli articoli →
+			</a>
+		</div>
+		<ul class="mt-10 grid gap-5 md:grid-cols-3">
+			{#each latestPosts as post (post.slug)}
+				<li>
+					<a
+						href="/blog/{post.slug}"
+						class="group flex h-full flex-col rounded-lg border border-border bg-surface p-6 transition-colors hover:border-muted hover:bg-surface-2"
+					>
+						<p class="font-mono text-xs text-primary">
+							{post.category ?? 'Articolo'} · {formatDate(post.date)}
+						</p>
+						<h3 class="mt-3 text-lg font-bold text-ink">{post.title}</h3>
+						<p class="mt-3 flex-1 text-sm leading-relaxed text-muted">{post.excerpt}</p>
+						<span class="mt-5 font-mono text-sm text-primary">Leggi →</span>
+					</a>
+				</li>
+			{/each}
+		</ul>
+	</section>
+{/if}
 
 <QuoteCTA />
