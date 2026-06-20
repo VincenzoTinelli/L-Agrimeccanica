@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+/* ── Design system "Acciaio & Campo" ───────────────────────────────
+   Token OKLCH. Vedi DESIGN.md. Base scura industriale, colore = segnaletica. */
+@theme {
+	/* Superfici acciaio */
+	--color-bg: oklch(0.19 0.006 235);
+	--color-surface: oklch(0.235 0.008 235);
+	--color-surface-2: oklch(0.285 0.01 235);
+	--color-border: oklch(0.34 0.012 235);
+
+	/* Testo */
+	--color-ink: oklch(0.97 0.003 235);
+	--color-muted: oklch(0.74 0.012 235);
+
+	/* Brand color — usati come segnaletica, mai decorativi */
+	--color-primary: oklch(0.72 0.16 150); /* verde-macchina */
+	--color-primary-strong: oklch(0.66 0.17 150);
+	--color-accent: oklch(0.72 0.16 65); /* arancio sicurezza */
+	--color-on-brand: oklch(0.17 0.01 235); /* testo scuro su verde/arancio */
+
+	/* Tipografia */
+	--font-sans: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+	/* Easing esponenziale per motion sobria */
+	--ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+	:root {
+		color-scheme: dark;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		background-color: var(--color-bg);
+		color: var(--color-ink);
+		font-family: var(--font-sans);
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+	}
+
+	h1,
+	h2,
+	h3 {
+		text-wrap: balance;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	/* Focus visibile e coerente (verde-macchina) */
+	:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
+
+	::selection {
+		background-color: var(--color-primary);
+		color: var(--color-on-brand);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	*,
+	::before,
+	::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
