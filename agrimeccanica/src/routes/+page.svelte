@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { site, productCategories } from '$lib/config/site';
+	import { site } from '$lib/config/site';
 	import { flagshipProducts } from '$lib/data/products';
 	import { posts, formatDate } from '$lib/posts';
 	import ProductCard from '$lib/components/ProductCard.svelte';
 	import QuoteCTA from '$lib/components/QuoteCTA.svelte';
 	import BlogCover from '$lib/components/BlogCover.svelte';
 	import Hero from '$lib/components/Hero.svelte';
+	import CategoryShowcase from '$lib/components/CategoryShowcase.svelte';
 
 	const latestPosts = posts.slice(0, 3);
 
@@ -33,29 +34,7 @@
 <Hero />
 
 <!-- CATEGORIE -->
-<section class="mx-auto max-w-7xl px-4 py-20">
-	<div class="flex items-end justify-between gap-4">
-		<h2 class="text-2xl font-bold tracking-tight text-ink uppercase sm:text-3xl">Cosa produciamo</h2>
-		<a href="/prodotti" class="hidden font-mono text-sm text-primary hover:underline sm:inline">
-			Tutto il catalogo →
-		</a>
-	</div>
-	<ul
-		class="mt-10 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-3"
-	>
-		{#each productCategories as cat (cat.slug)}
-			<li>
-				<a
-					href="/prodotti/{cat.slug}"
-					class="group flex h-full items-center justify-between gap-4 bg-surface px-6 py-7 transition-colors hover:bg-surface-2"
-				>
-					<span class="text-lg font-semibold text-ink">{cat.label}</span>
-					<span class="font-mono text-primary transition-transform group-hover:translate-x-1">→</span>
-				</a>
-			</li>
-		{/each}
-	</ul>
-</section>
+<CategoryShowcase />
 
 <!-- PRODOTTI DI PUNTA -->
 <section class="border-t border-border bg-surface/40">

@@ -541,7 +541,7 @@ export const products: Product[] = [
 			['Numero martelli', '24'],
 			['Sistema riciclo', 'Polveri']
 		],
-		hasPhoto: false,
+		hasPhoto: true,
 		featured: true
 	}
 ];
